@@ -1,0 +1,9 @@
+#!/bin/bash
+
+[ -n "$SSH_CLIENT" ] && SESSION_TYPE="remote"
+
+if [[ $SESSION_TYPE == "remote" ]]; then
+  cat | nc -C localhost 2224
+else
+  cat | pbcopy
+fi
