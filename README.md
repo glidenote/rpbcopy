@@ -35,8 +35,8 @@ RemoteForward 2224 127.0.0.1:2224
 launchctl unload ~/Library/LaunchAgents/pbcopy.plist
 ```
 
-UTF-8の内容を送って、文字化けが発生する場合は同梱の`.CFUserTextEncoding`を
-`~/.CFUserTextEncoding`に設置することで回避出来ると思います。
+UTF-8の内容を送ると、文字化けが発生する場合や転送が上手くされない場合は
+同梱の`.CFUserTextEncoding`を`~/.CFUserTextEncoding`に設置することで回避出来ると思います。
 
 `~/.CFUserTextEncoding`を編集することで他に影響が及ぶ場合があるので、
 必ずバックアップを取り、自己責任で編集お願いします。
@@ -61,6 +61,9 @@ chmod a+x ~/bin/rpbcopy
 手元Macのクリップボードに送りたいファイルやコマンドの出力を、リモートサーバ上で
 
 ```
+# 転送が出来るかテスト
+echo "hello" | rpbcopy
+
 # fileの中身を手元Macのクリップボードにコピー
 cat fileneme | rpbcopy
 
