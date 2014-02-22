@@ -24,12 +24,22 @@ sshしたリモートサーバ上での出力や`cat`してpipeで渡した内�
 
 ### Mac側の設定
 
+#### LaunchAgentを起動
+
 `2224`ポートで待ち受けて、受け取った内容をクリップボードに渡すLaunchAgentを用意。
 同梱の`pbcopy.plist`を`~/Library/LaunchAgents/pbcopy.plist`に設置して、下記で起動
 
 ``` sh
 launchctl load ~/Library/LaunchAgents/pbcopy.plist
 ```
+
+停止する場合は下記
+
+``` sh
+launchctl unload ~/Library/LaunchAgents/pbcopy.plist
+```
+
+#### `~/.ssh/config`の設定
 
 リモートサーバの`2224`ポートをフォワーディングするので、
 `~/.ssh/config`に
@@ -40,13 +50,9 @@ RemoteForward 2224 127.0.0.1:2224
 
 を追加。
 
-停止する場合は下記
+#### `~/.CFUserTextEncoding`の設定
 
-``` sh
-launchctl unload ~/Library/LaunchAgents/pbcopy.plist
-```
-
-UTF-8の内容を送ると、文字化けが発生する場合や転送が上手くされない場合は
+必ず必要な作業ではありませんが、UTF-8の内容を送ると文字化けが発生する場合、転送が上手くされない場合は
 同梱の`.CFUserTextEncoding`を`~/.CFUserTextEncoding`に設置することで回避出来ると思います。
 
 `~/.CFUserTextEncoding`を編集することで他に影響が及ぶ場合があるので、
@@ -54,11 +60,15 @@ UTF-8の内容を送ると、文字化けが発生する場合や転送が上手
 
 ### リモートサーバ(CentOS)側の設定
 
+#### ncの導入
+
 `nc(netcat)`が無いと使えないので`nc`を導入。(`nc`のバージョンが古いと`-C`オプションが存在しない場合があります。)
 
 ``` sh
 sudo yum -y install nc
 ```
+
+#### rpbcopyスクリプトの設置
 
 同梱の`rpbcopy`を`~/bin/rpbcopy`など`PATH`が通っている場所に設置して権限を付与
 
